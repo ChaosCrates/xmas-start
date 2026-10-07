@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Christmas Home ❄️</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; min-height: 100%; }
+  body {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #fff;
+    background:
+      radial-gradient(circle at 50% -10%, rgba(255,255,255,.38), transparent 35%),
+      linear-gradient(180deg, #173b63 0%, #0c2947 52%, #061827 100%);
+    overflow-x: hidden;
+  }
+
+  .snow { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .flake {
+    position: absolute; top: -20px; color: white; opacity: .82; user-select: none;
+    animation: fall linear infinite; filter: drop-shadow(0 0 4px rgba(255,255,255,.55));
+  }
+  @keyframes fall { to { transform: translate3d(var(--drift), 110vh, 0) rotate(360deg); } }
+
+  .wrap { position: relative; z-index: 1; width: min(1100px, 92%); margin: 0 auto; padding: 38px 0 30px; }
+
+  header {
+    text-align: center; padding: 24px 14px 30px; position: relative;
+  }
+  header:before, header:after {
+    content: "✦"; position: absolute; top: 25px; color: #ffd85a;
+    font-size: 2rem; text-shadow: 0 0 14px rgba(255,216,90,.8);
+  }
+  header:before { left: 9%; }
+  header:after { right: 9%; }
+
+  .eyebrow {
+    letter-spacing: .22em; text-transform: uppercase; font-size: .75rem;
+    color: #ffe6a0; font-weight: 800;
+  }
+  h1 {
+    margin: 8px 0 8px; font-size: clamp(2.7rem, 8vw, 5.6rem);
+    line-height: .95; color: #fff;
+    text-shadow: 0 4px 0 #a71919, 0 8px 25px rgba(0,0,0,.35);
+  }
+  .sub { margin: 0; opacity: .9; font-size: 1.05rem; }
+
+  .glass {
+    background: linear-gradient(145deg, rgba(132,20,24,.82), rgba(5,79,48,.82));
+    border: 2px solid rgba(255,216,90,.55);
+    box-shadow: 0 20px 60px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.16);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-radius: 26px;
+  }
+
+  .countdown { padding: 22px; text-align: center; margin-bottom: 18px; }
+  .countdown h2 {
+    margin: 0 0 15px; font-size: 1.15rem; color: #ffe6a0;
+    text-shadow: 0 0 12px rgba(255,216,90,.25);
+  }
+  .units { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .unit {
+    padding: 15px 8px; border-radius: 18px;
+    background: rgba(255,255,255,.10); border: 1px solid rgba(255,216,90,.32);
+  }
+  .num { display:block; font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 900; color:#fff; }
+  .label { font-size: .72rem; text-transform: uppercase; letter-spacing: .12em; color:#ffe6a0; font-weight:700; }
+
+  .grid { display:grid; grid-template-columns: 1.15fr .85fr; gap:18px; }
+  .panel { padding: 24px; }
+  .panel h2 { margin: 0 0 16px; font-size: 1.15rem; color:#ffe6a0; }
+
+  .buttons { display:grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .site-btn {
+    min-height: 82px; border: 2px solid rgba(255,216,90,.32);
+    border-radius: 19px; color: white; cursor:pointer; text-align:left;
+    padding: 15px 16px; font: inherit;
+    background: linear-gradient(135deg, rgba(170,25,30,.9), rgba(5,105,59,.9));
+    transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+    box-shadow: 0 7px 18px rgba(0,0,0,.16);
+  }
+  .site-btn:nth-child(even) {
+    background: linear-gradient(135deg, rgba(5,105,59,.92), rgba(170,25,30,.88));
+  }
+  .site-btn:hover {
+    transform: translateY(-4px) scale(1.01);
+    filter: brightness(1.12);
+    box-shadow: 0 12px 28px rgba(0,0,0,.25), 0 0 18px rgba(255,216,90,.18);
+  }
+  .site-btn:active { transform: translateY(0); }
+  .site-btn strong { display:block; font-size: 1rem; }
+  .site-btn span {
+    display:block; margin-top:5px; font-size:.78rem; opacity:.72;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+
+  .info { display:grid; gap:12px; }
+  .info-card {
+    padding: 18px; border-radius: 18px;
+    background: rgba(0,0,0,.16); border:1px solid rgba(255,216,90,.24);
+  }
+  .big-time { font-size: clamp(2rem, 5vw, 3.2rem); font-weight:900; letter-spacing:-.04em; }
+  .date { color:#ffe6a0; margin-top:3px; opacity:.9; }
+  .tree { font-size: 5rem; text-align:center; margin: 2px 0 -5px; filter: drop-shadow(0 8px 18px rgba(0,0,0,.2)); }
+
+  /* School Clock Box Styles */
+  .school-box { margin-top: 18px; text-align: center; }
+  .school-status { font-size: 1.15rem; font-weight: 700; color: #ffe6a0; margin-bottom: 8px; }
+  .school-timer { font-size: clamp(1.2rem, 3.5vw, 2rem); font-weight: 800; margin-bottom: 15px; color: #fff; }
+  .schedule-toggle {
+    background: rgba(255,216,90,.2); border: 1px solid rgba(255,216,90,.4);
+    color: #fff; padding: 6px 14px; border-radius: 12px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 600; margin-bottom: 12px; transition: background 0.2s;
+  }
+  .schedule-toggle:hover { background: rgba(255,216,90,.35); }
+  .grade-select {
+    background: rgba(0,0,0,.3); color: #ffe6a0; border: 1px solid rgba(255,216,90,.4);
+    padding: 4px 10px; border-radius: 8px; font-family: inherit; font-size: 0.85rem; margin-left: 6px;
+  }
+  .schedule-table {
+    width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 10px; text-align: left;
+  }
+  .schedule-table th, .schedule-table td {
+    padding: 6px 8px; border-bottom: 1px solid rgba(255,255,255,.12);
+  }
+  .schedule-table th { color: #ffe6a0; font-weight: 700; }
+
+  footer { text-align:center; opacity:.7; font-size:.75rem; padding:22px 0 0; color:#ffe6a0; }
+
+  .music {
+    position: fixed; right:18px; bottom:18px; z-index:5;
+    display:flex; align-items:center; gap:9px; padding:10px 13px;
+    border-radius:999px; background:rgba(104,17,22,.9);
+    border:2px solid rgba(255,216,90,.5); backdrop-filter:blur(12px);
+    box-shadow:0 8px 25px rgba(0,0,0,.25);
+  }
+  .music button { border:0; color:white; background:transparent; cursor:pointer; font-size:1rem; }
+  .dot {
+    width:8px; height:8px; border-radius:50%; background:#7fffd4;
+    box-shadow:0 0 12px #7fffd4;
+  }
+
+  @media (max-width:720px) {
+    .grid { grid-template-columns:1fr; }
+    .buttons { grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:430px) {
+    .units { gap:6px; }
+    .unit { padding:12px 5px; }
+    .buttons { grid-template-columns:1fr; }
+  }
+  .lights {
+    position: relative; z-index: 2; width: min(1150px, 96%); margin: 0 auto;
+    display: flex; justify-content: space-between; padding: 0 2%;
+    font-size: 19px; line-height: 1; pointer-events: none;
+  }
+  .lights span {
+    display: block; color: #ffd84d;
+    text-shadow: 0 0 8px currentColor, 0 0 16px currentColor;
+    animation: twinkle 1.2s infinite alternate;
+  }
+  .lights span:nth-child(3n) { color:#e53935; animation-delay:.25s; }
+  .lights span:nth-child(3n+1) { color:#42d66b; animation-delay:.55s; }
+  @keyframes twinkle { from { opacity:.55; } to { opacity:1; transform:scale(1.15); } }
+</style>
+</head>
+<body>
+<div class="snow" id="snow"></div>
+
+<div class="lights" aria-hidden="true">
+  <span>●</span><span>●</span><span>●</span><span>●</span><span>●</span>
+  <span>●</span><span>●</span><span>●</span><span>●</span><span>●</span>
+  <span>●</span><span>●</span><span>●</span><span>●</span><span>●</span>
+</div>
+
+<main class="wrap">
+  <header>
+    <div class="eyebrow">❄️ Winter • Christmas • 2026 ❄️</div>
+    <h1>Merry Christmas</h1>
+    <p class="sub">Cozy season is almost here! Celebrate the magic of the holidays.</p>
+  </header>
+
+  <section class="glass countdown">
+    <h2>🎄 Countdown to Christmas</h2>
+    <div class="units">
+      <div class="unit"><span class="num" id="days">0</span><span class="label">Days</span></div>
+      <div class="unit"><span class="num" id="hours">0</span><span class="label">Hours</span></div>
+      <div class="unit"><span class="num" id="mins">0</span><span class="label">Minutes</span></div>
+      <div class="unit"><span class="num" id="secs">0</span><span class="label">Seconds</span></div>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="glass panel">
+      <h2>🔗 Quick Links</h2>
+      <div class="buttons">
+        <button class="site-btn" onclick="go('https://santatracker.google.com')">
+          <strong>Website One</strong><span>Santa Tracker</span>
+        </button>
+        <button class="site-btn" onclick="go('https://youtube.com')">
+          <strong>Website Two</strong><span>YouTube</span>
+        </button>
+        <button class="site-btn" onclick="go('https://github.com')">
+          <strong>Website Three</strong><span>Github</span>
+        </button>
+        <button class="site-btn" onclick="go('https://roblox.com')">
+          <strong>Website Four</strong><span>Roblox</span>
+        </button>
+        <button class="site-btn" onclick="go('https://create.roblox.com')">
+          <strong>Website Five</strong><span>Roblox Studio</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="glass panel info">
+      <h2>🕒 Right Now</h2>
+      <div class="info-card">
+        <div class="big-time" id="clock">--:--:--</div>
+        <div class="date" id="date">Loading date...</div>
+      </div>
+      <div class="info-card">
+        <div class="tree">🎄</div>
+        <div style="text-align:center;opacity:.72">Stay cozy. The snow is doing its thing.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- School Clock Box -->
+  <section class="glass panel school-box">
+    <h2>🔔 School Clock</h2>
+    <div class="info-card">
+      <div class="school-status" id="schoolStatus">Checking schedule...</div>
+      <div class="school-timer" id="schoolTimer">--:--:--</div>
+
+      <div style="margin-top: 10px;">
+        <label for="gradeSelect" style="font-size:0.85rem; color:#ffe6a0; font-weight:600;">Grade:</label>
+        <select id="gradeSelect" class="grade-select" onchange="renderScheduleTable(); updateSchoolClock();">
+          <option value="5">5th Grade</option>
+          <option value="6" selected>6th Grade</option>
+          <option value="7">7th Grade</option>
+          <option value="8">8th Grade</option>
+        </select>
+        <button class="schedule-toggle" style="margin-left:10px;" onclick="toggleSchedule()">📋 Here's my schedule too</button>
+      </div>
+
+      <div id="scheduleContainer" style="display:none; margin-top: 15px;">
+        <table class="schedule-table">
+          <thead>
+            <tr><th>Period / Event</th><th>Time</th></tr>
+          </thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>Made for snowy days • ☃️ • <span id="year"></span></footer>
+</main>
+
+<div class="music">
+  <div class="dot" id="musicDot"></div>
+  <span id="musicText">Christmas music</span>
+  <button onclick="toggleMusic()" aria-label="Toggle music">⏯</button>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="christmas_music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const christmas = new Date("December 25, 2026 00:00:00");
+
+  function go(url) {
+    window.location.href = url;
+  }
+
+  function updateCountdown() {
+    const now = new Date();
+    let diff = christmas - now;
+
+    if (diff <= 0) {
+      document.querySelector(".countdown h2").textContent = "🎅 Merry Christmas!";
+      diff = 0;
+    }
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff / 3600000) % 24);
+    const mins = Math.floor((diff / 60000) % 60);
+    const secs = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = String(hours).padStart(2,"0");
+    document.getElementById("mins").textContent = String(mins).padStart(2,"0");
+    document.getElementById("secs").textContent = String(secs).padStart(2,"0");
+  }
+
+  function updateClock() {
+    const now = new Date();
+    document.getElementById("clock").textContent =
+      now.toLocaleTimeString([], {hour:"numeric", minute:"2-digit", second:"2-digit"});
+    document.getElementById("date").textContent =
+      now.toLocaleDateString([], {weekday:"long", month:"long", day:"numeric", year:"numeric"});
+    document.getElementById("year").textContent = now.getFullYear();
+  }
+
+  // Schedule Data by Grade
+  const schedules = {
+    5: [
+      { name: "Student Arrival", start: "08:00", end: "08:14" },
+      { name: "Homeroom", start: "08:17", end: "08:24" },
+      { name: "Period 1", start: "08:27", end: "09:08" },
+      { name: "Period 2", start: "09:11", end: "09:52" },
+      { name: "Period 3", start: "09:55", end: "10:36" },
+      { name: "Period 4", start: "10:39", end: "11:20" },
+      { name: "Period 5", start: "11:23", end: "12:04" },
+      { name: "Period 6", start: "12:07", end: "12:48" },
+      { name: "Period 7", start: "12:54", end: "13:24" },
+      { name: "Period 8", start: "13:35", end: "14:16" },
+      { name: "Period 9", start: "14:19", end: "15:00" },
+      { name: "Dismissal", start: "15:00", end: "15:12" }
+    ],
+    6: [
+      { name: "Student Arrival", start: "08:00", end: "08:14" },
+      { name: "Homeroom", start: "08:17", end: "08:24" },
+      { name: "Period 1", start: "08:27", end: "09:08" },
+      { name: "Period 2", start: "09:11", end: "09:52" },
+      { name: "Period 3", start: "09:55", end: "10:36" },
+      { name: "Period 4", start: "10:39", end: "11:20" },
+      { name: "Period 5", start: "11:23", end: "12:04" },
+      { name: "Period 6", start: "12:10", end: "12:40" },
+      { name: "Period 7", start: "12:51", end: "13:32" },
+      { name: "Period 8", start: "13:35", end: "14:16" },
+      { name: "Period 9", start: "14:19", end: "15:00" },
+      { name: "Dismissal", start: "15:00", end: "15:12" }
+    ],
+    7: [
+      { name: "Student Arrival", start: "08:00", end: "08:14" },
+      { name: "Homeroom", start: "08:17", end: "08:24" },
+      { name: "Period 1", start: "08:27", end: "09:08" },
+      { name: "Period 2", start: "09:11", end: "09:52" },
+      { name: "Period 3", start: "09:55", end: "10:36" },
+      { name: "Period 4", start: "10:42", end: "11:12" },
+      { name: "Period 5", start: "11:23", end: "12:04" },
+      { name: "Period 6", start: "12:07", end: "12:48" },
+      { name: "Period 7", start: "12:51", end: "13:32" },
+      { name: "Period 8", start: "13:35", end: "14:16" },
+      { name: "Period 9", start: "14:19", end: "15:00" },
+      { name: "Dismissal", start: "15:00", end: "15:12" }
+    ],
+    8: [
+      { name: "Student Arrival", start: "08:00", end: "08:14" },
+      { name: "Homeroom", start: "08:17", end: "08:24" },
+      { name: "Period 1", start: "08:27", end: "09:08" },
+      { name: "Period 2", start: "09:11", end: "09:52" },
+      { name: "Period 3", start: "09:55", end: "10:36" },
+      { name: "Period 4", start: "10:39", end: "11:20" },
+      { name: "Period 5", start: "11:26", end: "11:56" },
+      { name: "Period 6", start: "12:07", end: "12:48" },
+      { name: "Period 7", start: "12:51", end: "13:32" },
+      { name: "Period 8", start: "13:35", end: "14:16" },
+      { name: "Period 9", start: "14:19", end: "15:00" },
+      { name: "Dismissal", start: "15:00", end: "15:12" }
+    ]
+  };
+
+  function parseTime(timeStr, baseDate) {
+    const [h, m] = timeStr.split(':').map(Number);
+    const d = new Date(baseDate);
+    d.setHours(h, m, 0, 0);
+    return d;
+  }
+
+  function format12h(timeStr) {
+    const [h, m] = timeStr.split(':').map(Number);
+    const period = h >= 12 ? 'PM' : 'AM';
+    const displayH = h % 12 === 0 ? 12 : h % 12;
+    return `${displayH}:${String(m).padStart(2,'0')} ${period}`;
+  }
+
+  function updateSchoolClock() {
+    const now = new Date();
+    const day = now.getDay();
+    const statusEl = document.getElementById("schoolStatus");
+    const timerEl = document.getElementById("schoolTimer");
+
+    // Weekend Check (0 = Sun, 6 = Sat)
+    if (day === 0 || day === 6) {
+      statusEl.textContent = "Yay! The weekend. Have fun! 🎉";
+      timerEl.textContent = "🎉 Enjoy your break!";
+      return;
+    }
+
+    const grade = document.getElementById("gradeSelect").value;
+    const currentSched = schedules[grade];
+    const startTime = parseTime(currentSched[0].start, now);
+    const endTime = parseTime(currentSched[currentSched.length - 1].end, now);
+
+    if (now < startTime) {
+      // School hasn't started yet today
+      const diffMs = startTime - now;
+      const hours = Math.floor(diffMs / 3600000);
+      const mins = Math.floor((diffMs % 3600000) / 60000);
+      const secs = Math.floor((diffMs % 60000) / 1000);
+
+      statusEl.textContent = "School has not started yet.";
+      timerEl.textContent = `Starts in: ${String(hours).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+    } else if (now > endTime) {
+      statusEl.textContent = "School is over for today! 🥳";
+      timerEl.textContent = "See you tomorrow!";
+    } else {
+      // School is currently in session - find current period or passing period
+      let currentPeriod = null;
+      let nextPeriod = null;
+
+      for (let i = 0; i < currentSched.length; i++) {
+        const pStart = parseTime(currentSched[i].start, now);
+        const pEnd = parseTime(currentSched[i].end, now);
+
+        if (now >= pStart && now <= pEnd) {
+          currentPeriod = currentSched[i];
+          const diffMs = pEnd - now;
+          const mins = Math.floor(diffMs / 60000);
+          const secs = Math.floor((diffMs % 60000) / 1000);
+          statusEl.textContent = `Currently in: ${currentPeriod.name}`;
+          timerEl.textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')} remaining`;
+          return;
+        } else if (now < pStart && (!nextPeriod || pStart < parseTime(nextPeriod.start, now))) {
+          nextPeriod = currentSched[i];
+        }
+      }
+
+      if (nextPeriod) {
+        const pStart = parseTime(nextPeriod.start, now);
+        const diffMs = pStart - now;
+        const mins = Math.floor(diffMs / 60000);
+        const secs = Math.floor((diffMs % 60000) / 1000);
+        statusEl.textContent = `Passing Period (Next: ${nextPeriod.name})`;
+        timerEl.textContent = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')} until next class`;
+      }
+    }
+  }
+
+  function toggleSchedule() {
+    const container = document.getElementById("scheduleContainer");
+    if (container.style.display === "none") {
+      container.style.display = "block";
+    } else {
+      container.style.display = "none";
+    }
+  }
+
+  function renderScheduleTable() {
+    const grade = document.getElementById("gradeSelect").value;
+    const body = document.getElementById("scheduleBody");
+    body.innerHTML = "";
+    schedules[grade].forEach(item => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td><strong>${item.name}</strong></td><td>${format12h(item.start)} - ${format12h(item.end)}</td>`;
+      body.appendChild(tr);
+    });
+  }
+
+  const snow = document.getElementById("snow");
+  for (let i = 0; i < 90; i++) {
+    const f = document.createElement("div");
+    f.className = "flake";
+    f.textContent = Math.random() > .2 ? "•" : "❄";
+    f.style.left = Math.random() * 100 + "vw";
+    f.style.fontSize = (Math.random() * 12 + 5) + "px";
+    f.style.animationDuration = (Math.random() * 8 + 7) + "s";
+    f.style.animationDelay = (-Math.random() * 15) + "s";
+    f.style.setProperty("--drift", (Math.random() * 180 - 90) + "px");
+    snow.appendChild(f);
+  }
+
+  const music = document.getElementById("bgMusic");
+  const musicText = document.getElementById("musicText");
+  const musicDot = document.getElementById("musicDot");
+
+  async function toggleMusic() {
+    if (music.paused) {
+      try {
+        await music.play();
+        musicText.textContent = "Christmas music • ON";
+        musicDot.style.background = "#7fffd4";
+      } catch {
+        musicText.textContent = "Add christmas_music.mp3";
+      }
+    } else {
+      music.pause();
+      musicText.textContent = "Christmas music • OFF";
+      musicDot.style.background = "#aaa";
+    }
+  }
+
+  renderScheduleTable();
+  updateCountdown();
+  updateClock();
+  updateSchoolClock();
+  setInterval(updateCountdown, 1000);
+  setInterval(updateClock, 1000);
+  setInterval(updateSchoolClock, 1000);
+</script>
+</body>
+</html>
